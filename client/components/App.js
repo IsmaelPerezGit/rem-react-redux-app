@@ -1,10 +1,13 @@
 import React from 'react'
-import Greetings from './Greetings'
+import Navbar from './Navbar'
 
 class App extends React.Component {
   render() {
     return (
-      <Greetings />
+      <div className="container">
+        <Navbar />
+        {this.props.children}
+      </div>
     )
   }
 }
