@@ -1,21 +1,29 @@
-import path from 'path'
+import path from 'path';
+import webpack from 'webpack';
 
 export default {
-  entry: path.join(__dirname, '/client/index.js'),
+  devtool: 'source-map',
+  entry: [
+    'webpack-hot-middleware/client',
+    './client/index.js',
+  ],
   output: {
-    filename:'bundle.js',
-    path: '/'
+    path: path.resolve(__dirname),
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        include: path.join(__dirname, 'client'),
-        loaders: [ 'babel-loader' ]
+        include: path.resolve(__dirname, 'client'),
+        exclude: /node_modules/,
+        loader: [ 'babel-loader' ]
       }
     ]
   },
-  resolve: {
-    extensions: [' ', '.js']
-  }
-}
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
+}﻿
